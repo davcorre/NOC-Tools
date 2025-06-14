@@ -1,6 +1,57 @@
 # NOC Tools Dashboard
 
-Una aplicación web moderna para centralizar herramientas NOC (Network Operations Center) con una interfaz intuitiva de botones accionables con iconos representativos.
+Panel de herramientas para operaciones NOC con colores corporativos de Mercado Libre.
+
+## 🚀 Características
+
+- **Botones predefinidos** para herramientas NOC esenciales
+- **Botones personalizables** - Agrega tus propias herramientas
+- **Persistencia local** - Tus botones personalizados se guardan en el navegador
+- **Colores de Mercado Libre** - Diseño corporativo con amarillo (#FFE600) y azul (#3483FA)
+- **Responsive** - Funciona en desktop y móvil
+
+## 🛠️ Cómo usar
+
+1. Haz clic en cualquier botón con ➕ para personalizarlo
+2. Completa el formulario con:
+   - Nombre del botón
+   - URL de redirección
+   - Icono (selecciona de la lista)
+3. Haz clic en "Guardar"
+4. ¡Tu botón personalizado queda guardado permanentemente!
+
+## 🔧 Herramientas incluidas
+
+- FURY (FuryCloud)
+- GRAFANA (Monitoreo)
+- COSUBI (Autenticación)
+- GATHER (Comunicación)
+- IM INCIDENT (Gestión de incidentes)
+- GUÍA DE OPERADORES NOC
+- MOODY (Bug tracking)
+- ICC (Comunicaciones)
+- PANIC BUTTON (Emergencias)
+- SME-ONCALL (Soporte)
+- OPSGENIE (Alertas)
+- MÉTRICAS (Dashboards)
+
+## 🌐 Despliegue
+
+Este proyecto está diseñado para funcionar en GitHub Pages o cualquier hosting estático.
+
+## 💾 Almacenamiento
+
+Los botones personalizados se guardan usando localStorage del navegador:
+- Datos privados por usuario
+- Persistencia local (no se pierden al cerrar el navegador)
+- No requiere backend ni base de datos
+
+## 🎨 Diseño
+
+Utiliza los colores corporativos de Mercado Libre:
+- Amarillo principal: #FFE600
+- Azul corporativo: #3483FA
+- Azul oscuro: #2968C8
 
 ## Características
 

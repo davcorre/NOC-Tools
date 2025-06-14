@@ -104,6 +104,50 @@
         </main>
     </div>
     
+    <!-- Modal para personalizar botones -->
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Personalizar Botón</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="customizeForm">
+                    <div class="form-group">
+                        <label for="buttonName">Nombre del Botón:</label>
+                        <input type="text" id="buttonName" name="buttonName" required placeholder="Ej: Nueva Herramienta">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="buttonUrl">URL de Redirección:</label>
+                        <input type="url" id="buttonUrl" name="buttonUrl" required placeholder="https://ejemplo.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="buttonIcon">Icono (Font Awesome):</label>
+                        <select id="buttonIcon" name="buttonIcon">
+                            <option value="fas fa-tools">🔧 Herramientas</option>
+                            <option value="fas fa-link">🔗 Enlace</option>
+                            <option value="fas fa-globe">🌐 Web</option>
+                            <option value="fas fa-database">💾 Base de Datos</option>
+                            <option value="fas fa-server">🖥️ Servidor</option>
+                            <option value="fas fa-cog">⚙️ Configuración</option>
+                            <option value="fas fa-dashboard">📊 Dashboard</option>
+                            <option value="fas fa-file-alt">📄 Documentos</option>
+                            <option value="fas fa-envelope">✉️ Email</option>
+                            <option value="fas fa-calendar">📅 Calendario</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-save">Guardar</button>
+                        <button type="button" class="btn-cancel">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html> 

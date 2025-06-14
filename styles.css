@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Arial', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FFE600 0%, #3483FA 100%);
     min-height: 100vh;
     color: #333;
 }
@@ -37,11 +37,12 @@ header p {
 }
 
 .dashboard {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 230, 0, 0.3);
 }
 
 .grid {
@@ -54,7 +55,7 @@ header p {
 
 .card {
     background: white;
-    border: 3px solid #333;
+    border: 3px solid #2968C8;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -65,7 +66,7 @@ header p {
     cursor: pointer;
     padding: 1rem;
     min-height: 120px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(41, 104, 200, 0.2);
     position: relative;
     overflow: hidden;
     animation: fadeInUp 0.6s ease forwards;
@@ -73,9 +74,9 @@ header p {
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    border-color: #667eea;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-shadow: 0 8px 25px rgba(52, 131, 250, 0.3);
+    border-color: #FFE600;
+    background: linear-gradient(135deg, #fff9e6 0%, #f0f7ff 100%);
 }
 
 .card:active {
@@ -99,12 +100,12 @@ header p {
 .icon {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #667eea;
+    color: #3483FA;
     transition: all 0.3s ease;
 }
 
 .card:hover .icon {
-    color: #5a67d8;
+    color: #2968C8;
     transform: scale(1.1);
 }
 
@@ -158,7 +159,7 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,230,0,0.3), transparent);
     transition: left 0.5s;
 }
 
@@ -263,19 +264,19 @@ header p {
 
 /* Estilos específicos para iconos de herramientas */
 .card[data-url*="furycloud"] .icon {
-    color: #ff6b35;
+    color: #FFE600;
 }
 
 .card[data-url*="grafana"] .icon {
-    color: #f46800;
+    color: #3483FA;
 }
 
 .card[data-url*="cosubi"] .icon {
-    color: #38a169;
+    color: #2968C8;
 }
 
 .card[data-url*="gather"] .icon {
-    color: #805ad5;
+    color: #FFE600;
 }
 
 .card[data-url*="incidents"] .icon {
@@ -283,15 +284,15 @@ header p {
 }
 
 .card[data-url*="docs.google"] .icon {
-    color: #4285f4;
+    color: #3483FA;
 }
 
 .card[data-url*="moody"] .icon {
-    color: #ed8936;
+    color: #FFE600;
 }
 
 .card[data-url*="noc-icc"] .icon {
-    color: #319795;
+    color: #2968C8;
 }
 
 .card[data-url*="panic-button"] .icon {
@@ -299,9 +300,166 @@ header p {
 }
 
 .card[data-url*="sme-on-call"] .icon {
-    color: #38a169;
+    color: #3483FA;
 }
 
 .card[data-url*="opsgenie"] .icon {
-    color: #ff6b35;
+    color: #FFE600;
+}
+
+/* Estilos para el Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #FFE600 0%, #3483FA 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.close:hover {
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3483FA;
+    box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.1);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.btn-save,
+.btn-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #FFE600 0%, #3483FA 100%);
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 131, 250, 0.3);
+}
+
+.btn-cancel {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsivo para el modal */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-save,
+    .btn-cancel {
+        width: 100%;
+    }
 } 
