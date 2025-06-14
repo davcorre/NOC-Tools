@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOC Tools Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NOC Tools Dashboard</h1>
+            <p>Panel de herramientas para operaciones NOC</p>
+        </header>
+        
+        <main class="dashboard">
+            <div class="grid">
+                <!-- Primera fila -->
+                <button class="card" data-url="https://web.furycloud.io/workspace?show=applications">
+                    <i class="fas fa-cloud icon"></i>
+                    <span class="card-title">FURY</span>
+                </button>
+                
+                <button class="card" data-url="https://grafana-service.furycloud.io/d/YObcQ-j7k/sre-troubleshooting?orgId=1&refresh=2m&var-globalTimeRange=2&var-globalAffectCoreMetrics=All&var-globalAppName=All&var-Application=1p-agreements-api&var-Domain=internal.mercadolibre.com&var-Endpoint=">
+                    <i class="fas fa-chart-line icon"></i>
+                    <span class="card-title">GRAFANA</span>
+                </button>
+                
+                <button class="card" data-url="https://cosubi.adminml.com/login">
+                    <i class="fas fa-user-shield icon"></i>
+                    <span class="card-title">COSUBI</span>
+                </button>
+                
+                <button class="card" data-url="https://app.gather.town/app/PJPHYNTteayZjWdg/NOC">
+                    <i class="fas fa-users icon"></i>
+                    <span class="card-title">GATHER</span>
+                </button>
+                
+                <!-- Segunda fila -->
+                <button class="card" data-url="https://incidents.adminml.com/incidents">
+                    <i class="fas fa-exclamation-triangle icon"></i>
+                    <span class="card-title">IM INCIDENT</span>
+                </button>
+                
+                <button class="card multi-line" data-url="https://docs.google.com/document/d/1HNeFpbtP6yQcvDiT7WrbIU38qzC4j1xZLhOdpx2sMjM/edit#heading=h.aro8iyk9p5w2">
+                    <i class="fas fa-book icon"></i>
+                    <span class="card-title">GUIA DE<br>OPERADORES<br>NOC</span>
+                </button>
+                
+                <button class="card" data-url="https://moody.adminml.com/incidents">
+                    <i class="fas fa-bug icon"></i>
+                    <span class="card-title">MOODY</span>
+                </button>
+                
+                <button class="card" data-url="https://noc-icc.adminml.com/incidents">
+                    <i class="fas fa-broadcast-tower icon"></i>
+                    <span class="card-title">ICC</span>
+                </button>
+                
+                <!-- Tercera fila -->
+                <button class="card" data-url="https://sme-panic-button.adminml.com/Login">
+                    <i class="fas fa-hand-paper icon emergency"></i>
+                    <span class="card-title">PANIC BUTON</span>
+                </button>
+                
+                <button class="card" data-url="https://sme-on-call.adminml.com/guard">
+                    <i class="fas fa-phone icon"></i>
+                    <span class="card-title">SME-ONCALL</span>
+                </button>
+                
+                <button class="card" data-url="https://nasdaq-meli.app.opsgenie.com/alert/list">
+                    <i class="fas fa-bell icon"></i>
+                    <span class="card-title">opsgenie</span>
+                </button>
+                
+                <button class="card" data-url="https://docs.google.com/document/d/1HNeFpbtP6yQcvDiT7WrbIU38qzC4j1xZLhOdpx2sMjM/edit?tab=t.0#heading=h.rc0xdr2bjsnu">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span class="card-title">métricas</span>
+                </button>
+                
+                <!-- Cuarta fila (vacía) -->
+                <div class="card empty">
+                    <i class="fas fa-plus icon-placeholder"></i>
+                    <span class="card-title"></span>
+                </div>
+                
+                <div class="card empty">
+                    <i class="fas fa-plus icon-placeholder"></i>
+                    <span class="card-title"></span>
+                </div>
+                
+                <div class="card empty">
+                    <i class="fas fa-plus icon-placeholder"></i>
+                    <span class="card-title"></span>
+                </div>
+                
+                <div class="card empty">
+                    <i class="fas fa-plus icon-placeholder"></i>
+                    <span class="card-title"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
