@@ -21,6 +21,7 @@ header {
     text-align: center;
     margin-bottom: 3rem;
     color: white;
+    position: relative;
 }
 
 header h1 {
@@ -36,6 +37,43 @@ header p {
     font-weight: 300;
 }
 
+/* Botón de reset */
+.reset-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reset-button:hover {
+    background: rgba(255, 230, 0, 0.2);
+    border-color: #FFE600;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 230, 0, 0.3);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+}
+
+.reset-button i {
+    font-size: 0.9rem;
+}
+
 .dashboard {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -47,10 +85,22 @@ header p {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
-    min-height: 600px;
+    min-height: auto;
+    max-width: 100%;
+}
+
+@media (min-width: 769px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 769px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .card {
@@ -175,9 +225,8 @@ header p {
     
     .grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(8, 1fr);
         gap: 1rem;
-        min-height: 800px;
+        min-height: auto;
     }
     
     .card {
@@ -205,13 +254,31 @@ header p {
     header p {
         font-size: 1rem;
     }
+    
+    .reset-button {
+        position: static;
+        margin: 10px auto 0;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+    
+    .card.add-new-button .icon-add {
+        font-size: 2rem;
+    }
+    
+    .card.empty .delete-button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        top: -10px;
+        right: -10px;
+    }
 }
 
 @media (max-width: 480px) {
     .grid {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(16, 1fr);
-        min-height: 1200px;
+        min-height: auto;
     }
     
     .card {
@@ -230,6 +297,29 @@ header p {
     
     .card.multi-line .card-title {
         font-size: 0.6rem;
+    }
+    
+    .reset-button {
+        font-size: 0.6rem;
+        padding: 5px 8px;
+        gap: 3px;
+    }
+    
+    .reset-button i {
+        font-size: 0.8rem;
+    }
+    
+    .card.add-new-button .icon-add {
+        font-size: 1.8rem;
+    }
+    
+    .card.empty .delete-button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        top: -12px;
+        right: -12px;
+        opacity: 1; /* Siempre visible en móvil para mejor accesibilidad */
     }
 }
 
@@ -461,5 +551,94 @@ header p {
     .btn-save,
     .btn-cancel {
         width: 100%;
+    }
+}
+
+/* Botón para agregar nuevos enlaces */
+.card.add-new-button {
+    background: linear-gradient(135deg, #FFE600 0%, #3483FA 100%);
+    border: 3px solid #2968C8;
+    color: white;
+    cursor: pointer;
+    order: 999; /* Siempre al final */
+}
+
+.card.add-new-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(52, 131, 250, 0.4);
+    border-color: #FFE600;
+    background: linear-gradient(135deg, #3483FA 0%, #FFE600 100%);
+}
+
+.card.add-new-button .icon-add {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.card.add-new-button:hover .icon-add {
+    animation: bounce 0.6s ease;
+    transform: scale(1.1);
+}
+
+.card.add-new-button .card-title {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Botón de eliminar para tarjetas vacías */
+.card.empty {
+    position: relative;
+}
+
+.card.empty .delete-button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #e53e3e;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.card.empty:hover .delete-button {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card.empty .delete-button:hover {
+    background: #c53030;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(197, 48, 48, 0.4);
+}
+
+.card.empty .delete-button:active {
+    transform: scale(0.95);
+}
+
+/* Animación bounce para el icono de agregar */
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        transform: translateY(0) scale(1.1);
+    }
+    40% {
+        transform: translateY(-10px) scale(1.1);
+    }
+    80% {
+        transform: translateY(-5px) scale(1.1);
     }
 } 

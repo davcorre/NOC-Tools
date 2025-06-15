@@ -13,6 +13,10 @@
         <header>
             <h1>NOC Tools Dashboard</h1>
             <p>Panel de herramientas para operaciones NOC</p>
+            <button id="resetButton" class="reset-button" title="Resetear botones personalizados">
+                <i class="fas fa-undo-alt"></i>
+                Reset Custom
+            </button>
         </header>
         
         <main class="dashboard">
@@ -80,25 +84,10 @@
                     <span class="card-title">métricas</span>
                 </button>
                 
-                <!-- Cuarta fila (vacía) -->
-                <div class="card empty">
-                    <i class="fas fa-plus icon-placeholder"></i>
-                    <span class="card-title"></span>
-                </div>
-                
-                <div class="card empty">
-                    <i class="fas fa-plus icon-placeholder"></i>
-                    <span class="card-title"></span>
-                </div>
-                
-                <div class="card empty">
-                    <i class="fas fa-plus icon-placeholder"></i>
-                    <span class="card-title"></span>
-                </div>
-                
-                <div class="card empty">
-                    <i class="fas fa-plus icon-placeholder"></i>
-                    <span class="card-title"></span>
+                <!-- Botón permanente para agregar más enlaces -->
+                <div class="card add-new-button" id="addNewButton">
+                    <i class="fas fa-plus-circle icon-add"></i>
+                    <span class="card-title">AGREGAR<br>NUEVO</span>
                 </div>
             </div>
         </main>

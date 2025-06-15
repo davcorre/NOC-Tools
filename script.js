@@ -1,5 +1,6 @@
 // Variables globales
 let currentCustomizingCard = null;
+let customButtonCounter = 0; // Contador para IDs únicos
 
 // Cargar datos personalizados desde localStorage
 function loadCustomButtons() {
@@ -10,7 +11,14 @@ function loadCustomButtons() {
             const customButtons = JSON.parse(savedButtons);
             console.log('Botones encontrados:', customButtons);
             customButtons.forEach(buttonData => {
-                const card = document.querySelector(`[data-custom-id="${buttonData.id}"]`);
+                let card = document.querySelector(`[data-custom-id="${buttonData.id}"]`);
+                
+                // Si la tarjeta no existe (botón dinámico), crearla
+                if (!card) {
+                    console.log(`Tarjeta no encontrada, creando dinámicamente: ${buttonData.id}`);
+                    card = createDynamicCard(buttonData.id);
+                }
+                
                 if (card) {
                     updateCardContent(card, buttonData);
                 }
@@ -111,23 +119,182 @@ function setupExistingButtons() {
     return buttons;
 }
 
-// Configurar botones vacíos para personalización
-function setupEmptyButtons() {
-    const emptyCards = document.querySelectorAll('.card.empty');
-    console.log(`Configurando ${emptyCards.length} botones vacíos`);
+// Crear una nueva tarjeta vacía
+function createNewEmptyCard() {
+    console.log('Creando nueva tarjeta vacía');
     
-    emptyCards.forEach((card, index) => {
-        // Agregar ID único para identificar la tarjeta
-        const customId = `custom-${index}`;
-        card.setAttribute('data-custom-id', customId);
-        console.log(`Botón vacío configurado con ID: ${customId}`);
-        
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Abriendo modal para personalizar botón:', customId);
-            openCustomizeModal(this);
-        });
+    const grid = document.querySelector('.grid');
+    const addButton = document.getElementById('addNewButton');
+    
+    if (!grid || !addButton) {
+        console.error('Grid o botón de agregar no encontrado');
+        return null;
+    }
+    
+    // Crear nueva tarjeta
+    const newCard = document.createElement('div');
+    newCard.className = 'card empty';
+    
+    const customId = `dynamic-custom-${Date.now()}-${customButtonCounter++}`;
+    newCard.setAttribute('data-custom-id', customId);
+    
+    newCard.innerHTML = `
+        <div class="delete-button" title="Eliminar tarjeta vacía">×</div>
+        <i class="fas fa-plus icon-placeholder"></i>
+        <span class="card-title"></span>
+    `;
+    
+    // Insertar antes del botón "Agregar nuevo"
+    grid.insertBefore(newCard, addButton);
+    
+    // Configurar evento de click para personalización (solo en el área principal)
+    newCard.addEventListener('click', function(e) {
+        // Evitar que se abra el modal si se hace click en el botón eliminar
+        if (e.target.classList.contains('delete-button')) {
+            return;
+        }
+        e.preventDefault();
+        console.log('Abriendo modal para personalizar botón dinámico:', customId);
+        openCustomizeModal(newCard);
     });
+    
+    // Configurar botón de eliminar
+    const deleteButton = newCard.querySelector('.delete-button');
+    deleteButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation(); // Evitar que se propague al click de la tarjeta
+        console.log('Botón eliminar clickeado para:', customId);
+        
+        // Confirmar eliminación
+        const confirmation = confirm('¿Estás seguro de que quieres eliminar esta tarjeta vacía?');
+        
+        if (confirmation) {
+            console.log('Usuario confirmó eliminación de tarjeta:', customId);
+            
+            // Animación de salida
+            newCard.style.transition = 'all 0.3s ease';
+            newCard.style.opacity = '0';
+            newCard.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                if (newCard.parentNode) {
+                    newCard.parentNode.removeChild(newCard);
+                    console.log('Tarjeta eliminada:', customId);
+                    showSuccessMessage('Tarjeta vacía eliminada exitosamente');
+                }
+            }, 300);
+        } else {
+            console.log('Usuario canceló eliminación');
+        }
+    });
+    
+    console.log(`Nueva tarjeta creada con botón eliminar, ID: ${customId}`);
+    return newCard;
+}
+
+// Crear tarjeta dinámica para botones guardados
+function createDynamicCard(customId) {
+    console.log('Creando tarjeta dinámica para:', customId);
+    
+    const grid = document.querySelector('.grid');
+    const addButton = document.getElementById('addNewButton');
+    
+    if (!grid || !addButton) {
+        console.error('Grid o botón de agregar no encontrado');
+        return null;
+    }
+    
+    // Crear nueva tarjeta
+    const newCard = document.createElement('div');
+    newCard.className = 'card empty';
+    newCard.setAttribute('data-custom-id', customId);
+    
+    newCard.innerHTML = `
+        <div class="delete-button" title="Eliminar tarjeta vacía">×</div>
+        <i class="fas fa-plus icon-placeholder"></i>
+        <span class="card-title"></span>
+    `;
+    
+    // Insertar antes del botón "Agregar nuevo"
+    grid.insertBefore(newCard, addButton);
+    
+    // Configurar evento de click para personalización (solo en el área principal)
+    newCard.addEventListener('click', function(e) {
+        // Evitar que se abra el modal si se hace click en el botón eliminar
+        if (e.target.classList.contains('delete-button')) {
+            return;
+        }
+        e.preventDefault();
+        console.log('Abriendo modal para personalizar botón dinámico recreado:', customId);
+        openCustomizeModal(newCard);
+    });
+    
+    // Configurar botón de eliminar
+    const deleteButton = newCard.querySelector('.delete-button');
+    deleteButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation(); // Evitar que se propague al click de la tarjeta
+        console.log('Botón eliminar clickeado para tarjeta recreada:', customId);
+        
+        // Confirmar eliminación
+        const confirmation = confirm('¿Estás seguro de que quieres eliminar esta tarjeta vacía?');
+        
+        if (confirmation) {
+            console.log('Usuario confirmó eliminación de tarjeta recreada:', customId);
+            
+            // Animación de salida
+            newCard.style.transition = 'all 0.3s ease';
+            newCard.style.opacity = '0';
+            newCard.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                if (newCard.parentNode) {
+                    newCard.parentNode.removeChild(newCard);
+                    console.log('Tarjeta recreada eliminada:', customId);
+                    showSuccessMessage('Tarjeta vacía eliminada exitosamente');
+                }
+            }, 300);
+        } else {
+            console.log('Usuario canceló eliminación de tarjeta recreada');
+        }
+    });
+    
+    console.log(`Tarjeta dinámica creada con botón eliminar para: ${customId}`);
+    return newCard;
+}
+
+// Configurar botón "Agregar nuevo"
+function setupAddNewButton() {
+    console.log('Configurando botón "Agregar nuevo"');
+    const addButton = document.getElementById('addNewButton');
+    
+    if (!addButton) {
+        console.error('Botón "Agregar nuevo" no encontrado');
+        return;
+    }
+    
+    addButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Botón "Agregar nuevo" clickeado');
+        
+        const newCard = createNewEmptyCard();
+        if (newCard) {
+            // Mostrar animación de entrada
+            newCard.style.opacity = '0';
+            newCard.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                newCard.style.transition = 'all 0.3s ease';
+                newCard.style.opacity = '1';
+                newCard.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Mostrar mensaje de éxito
+            showSuccessMessage('Nueva tarjeta agregada. ¡Haz click para personalizarla!');
+        }
+    });
+    
+    console.log('Botón "Agregar nuevo" configurado');
 }
 
 // Abrir modal de personalización
@@ -326,9 +493,66 @@ function addNotificationStyles() {
     document.head.appendChild(style);
 }
 
+// Configurar botón de reset
+function setupResetButton() {
+    console.log('Configurando botón de reset');
+    const resetButton = document.getElementById('resetButton');
+    
+    if (!resetButton) {
+        console.error('Botón de reset no encontrado');
+        return;
+    }
+    
+    resetButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Botón de reset clickeado');
+        
+        // Confirmar acción
+        const confirmation = confirm('¿Estás seguro de que quieres resetear todos los botones personalizados?\n\nEsta acción no se puede deshacer.');
+        
+        if (confirmation) {
+            console.log('Usuario confirmó el reset');
+            
+            // Mostrar mensaje de confirmación
+            showSuccessMessage('Botones personalizados reseteados. Recargando página...');
+            
+            // Resetear después de un breve delay para mostrar el mensaje
+            setTimeout(() => {
+                resetCustomButtons();
+            }, 1500);
+        } else {
+            console.log('Usuario canceló el reset');
+        }
+    });
+    
+    console.log('Botón de reset configurado');
+}
+
 // Función para detectar si es un dispositivo móvil
 function isMobile() {
     return window.innerWidth <= 768;
+}
+
+// Función para resetear todos los botones personalizados (para debugging)
+function resetCustomButtons() {
+    console.log('Reseteando botones personalizados...');
+    localStorage.removeItem('customButtons');
+    location.reload();
+}
+
+// Función para verificar localStorage (para debugging)
+function checkLocalStorage() {
+    console.log('Verificando localStorage...');
+    const saved = localStorage.getItem('customButtons');
+    console.log('Datos guardados:', saved);
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            console.table(parsed);
+        } catch (error) {
+            console.error('Error al parsear datos:', error);
+        }
+    }
 }
 
 // Inicialización cuando se carga el DOM
@@ -341,11 +565,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configurar botones existentes
     const existingButtons = setupExistingButtons();
     
-    // Configurar botones vacíos
-    setupEmptyButtons();
+    // Configurar botón "Agregar nuevo"
+    setupAddNewButton();
     
     // Configurar eventos del modal
     setupModalEvents();
+    
+    // Configurar botón de reset
+    setupResetButton();
     
     // Cargar botones personalizados guardados
     loadCustomButtons();
@@ -387,100 +614,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.table(stats);
 });
 
-// Función para resetear todos los botones personalizados (para debugging)
-function resetCustomButtons() {
-    console.log('Reseteando botones personalizados...');
-    localStorage.removeItem('customButtons');
-    location.reload();
-}
-
-// Función para verificar localStorage (para debugging)
-function checkLocalStorage() {
-    console.log('Verificando localStorage...');
-    const saved = localStorage.getItem('customButtons');
-    console.log('Datos guardados:', saved);
-    if (saved) {
-        try {
-            const parsed = JSON.parse(saved);
-            console.table(parsed);
-        } catch (error) {
-            console.error('Error al parsear datos:', error);
-        }
-    }
-}
-
 // Hacer disponibles las funciones de debugging globalmente
 window.resetCustomButtons = resetCustomButtons;
-window.checkLocalStorage = checkLocalStorage;
-
-// Mostrar información en consola
-console.log('NOC Tools Dashboard loaded successfully');
-console.log(`Found ${buttons.length} active buttons`);
-
-// Función para mostrar un tooltip opcional (se puede expandir)
-function showTooltip(element, text) {
-    // Esta función se puede expandir para mostrar tooltips
-    console.log(`Tooltip for ${element}: ${text}`);
-}
-
-// Event listeners adicionales para mejorar la experiencia de usuario
-document.addEventListener('DOMContentLoaded', function() {
-    // Animación de entrada para el header
-    const header = document.querySelector('header');
-    if (header) {
-        header.style.opacity = '0';
-        header.style.transform = 'translateY(-20px)';
-        setTimeout(() => {
-            header.style.transition = 'all 0.8s ease';
-            header.style.opacity = '1';
-            header.style.transform = 'translateY(0)';
-        }, 200);
-    }
-    
-    // Animación para el dashboard
-    const dashboard = document.querySelector('.dashboard');
-    if (dashboard) {
-        dashboard.style.opacity = '0';
-        dashboard.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            dashboard.style.transition = 'all 0.8s ease';
-            dashboard.style.opacity = '1';
-            dashboard.style.transform = 'scale(1)';
-        }, 400);
-    }
-});
-
-// Prevenir el comportamiento por defecto en botones vacíos
-const emptyCards = document.querySelectorAll('.card.empty');
-emptyCards.forEach(card => {
-    card.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Empty card clicked - no action defined');
-    });
-});
-
-// Ajustar comportamiento en móviles
-if (isMobile()) {
-    buttons.forEach(button => {
-        button.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.95)';
-        }, { passive: true });
-        
-        button.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        }, { passive: true });
-    });
-}
-
-// Mostrar estadísticas en consola para debugging
-const stats = {
-    totalCards: document.querySelectorAll('.card').length,
-    activeCards: buttons.length,
-    emptyCards: emptyCards.length,
-    isMobile: isMobile(),
-    userAgent: navigator.userAgent
-};
-
-console.table(stats); 
+window.checkLocalStorage = checkLocalStorage; 
